@@ -179,7 +179,7 @@
     </div>
 
     <p>
-      Documentations say it works in Chrome, Opera, Firefox, IE11 and doesn't work in Safari. I tested it in Safary 10 and it works.
+      Documentations say it works in Chrome, Opera, Firefox, IE11 and doesn't work in Safari. I tested it in Safari 10 and it works.
     </p>
 
     <h3 id="angle">angle~</h3>
@@ -199,7 +199,7 @@
 
     <h3 id="animation-fill-mode">animation-fill-mode</h3>
     <p>
-      This property specifies what styles are applied to the element when the animation is not playing. Now this thing is very useful. Imagin if you want you element to fade out. You will create an animation that is running from opacity 1 to 0. After the animation is complete it will jump back to it's initial state. So we actually need the element stay transparent after the animation is completed. 
+      This property specifies what styles are applied to the element when the animation is not playing. Now this thing is very useful. Imagine if you want you element to fade out. You will create an animation that is running from opacity 1 to 0. After the animation is complete it will jump back to it's initial state. So we actually need the element stay transparent after the animation is completed. 
     </p>
     <div class="embed">
       <iframe height='300' scrolling='no' title='xgKRbo' src='//codepen.io/gregh/embed/xgKRbo/?height=300&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/xgKRbo/'>xgKRbo</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
@@ -219,7 +219,7 @@
       It accepts the following values: none, forwards, backwards, both, initial, inherit.
     </p>
     <p>
-      <strong>none:</strong> (default) Element gets it's initial styling when the animtion is not executing<br>
+      <strong>none:</strong> (default) Element gets it's initial styling when the animation is not executing<br>
       <strong>forwards:</strong> animation will apply the values set by the last keyframe executed. Note, that it may not be the state of the "100%" or "to" keyframe. If you set animation-iteration-count to 1.5, the last keyframe will be the 50% keyframe. One more thing that you shall take into account, is that if your animation-direction set to reverse, the last keyframe will be the "0%" or "from" keyframe<br>
       <strong>backwards:</strong> will apply the property values defines in the keyframe that is played at the beginning of the animation<br>
       <strong>both:</strong> the animation will follow the rules of both forwards and backwards<br>
@@ -263,8 +263,8 @@
 
     <h3 id="background-attachment">background-attachment</h3>
     <p>
-      We sort of forgot this property, as we do not use colorful backgroud images often, but still, it can be useful.
-      If specifies if the background image stays fixed withing the viewport when you scroll the page or scrolls along with the page.
+      We sort of forgot this property, as we do not use colorful background images often, but still, it can be useful.
+      If specifies if the background image stays fixed within the viewport when you scroll the page or scrolls along with the page.
       It accepts the following values: scroll, fixed, local, initial and inherit.
     </p>
     <p>
@@ -279,14 +279,14 @@
 
     <h3 id="background-blend-mode">background-blend-mode</h3>
     <p>
-      This property specifies how element's background images, gradients and colors blend with each other. You can add a background image and background color, then set the blendmode to "lighten". You can also specify several blendmodes, one per background.
+      This property specifies how element's background images, gradients and colors blend with each other. You can add a background image and background color, then set the blend-mode to "lighten". You can also specify several blend-modes, one per background.
     </p>
     <p>
-      The flooowing blending modes can be used: 
+      The following blending modes can be used: 
       <ul>
         <li>color</li>
         <li>color-burn</li>
-        <li>color-dodgle</li>
+        <li>color-dodge</li>
         <li>darken</li>
         <li>difference</li>
         <li>exclusion</li>
@@ -326,7 +326,7 @@
       This property defines if the background is applied to only the element's content area, or padding/border areas as well. It accepts this values: border-box, content-box, padding-box, text, inherit and initial.
     </p>
     <p>
-      "How is this different from background-clip?" - you wonder. The difference is that "background-clip" cropes the background, and "background-origin" resizes it.
+      "How is this different from background-clip?" - you wonder. The difference is that "background-clip" crops the background, and "background-origin" resizes it.
     </p>
 
     <h3 id="box-decoration-break">box-decoration-break</h3>
@@ -343,7 +343,7 @@
       <strong>Note:</strong> Unfortunately you can use it only on inline elements. According to <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box-decoration-break" target="_blank">Mozilla documentation</a> you can only use it on Firefox and Chrome inline elements, but I tested it and current browsers show different results. It works on Firefox and Chrome 54, Opera 41 and Safari 10 with the "-webkit" prefix.
     </p>
     <p>
-      This codepen illustrates how it works:
+      This CodePen illustrates how it works:
     </p>
     <div class="embed">
       <iframe height='265' scrolling='no' title='oBNVzY' src='//codepen.io/gregh/embed/oBNVzY/?height=265&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/oBNVzY/'>oBNVzY</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
@@ -352,10 +352,10 @@
 
     <h3 id="calc">calc()</h3>
     <p>
-      calc() is a function that makes calculations to determine the property value. You can use something like <code>width: calc(100% - 32px)</code>. This will make element full width minus 32 pixels. It can be very useful for setting column width and substract the margins. No need for nesting two elements and giving padding to the parent element to achieve the same result.
+      calc() is a function that makes calculations to determine the property value. You can use something like <code>width: calc(100% - 32px)</code>. This will make element full width minus 32 pixels. It can be very useful for setting column width and subtract the margins. No need for nesting two elements and giving padding to the parent element to achieve the same result.
     </p>
     <p>
-      It accepts an expression with addition, subtraction, multiplication and division operators. Operands can be any syntax lenght values. 
+      It accepts an expression with addition, subtraction, multiplication and division operators. Operands can be any syntax length values. 
       You can even do something like <code>calc(var(--someValue) / 2 - 2em)</code>
     </p>
     <p>
@@ -382,7 +382,7 @@ width: calc(100% - 1em);
       <strong>column-rule-width:</strong> specifies the width of the line and accepts named values (thin, medium, thick), px, em, initial, inherit and unset
     </p>
     <p>
-      Good thing is that this column stuff works on all browsers and comes unprefixed on Chrome 50.
+      Good thing is that this column stuff works on all browsers and comes un-prefixed on Chrome 50.
     </p>
     <div class="embed">
       <iframe height='320' scrolling='no' title='pRoYMv' src='//codepen.io/gregh/embed/pRoYMv/?height=320&theme-id=0&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/pRoYMv/'>pRoYMv</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
@@ -410,8 +410,8 @@ ul > li:not(:last-child):after {
     <p>
       <strong>counter-reset:</strong> resets or creates a counter. the value of this property is the name of the counter that you define<br>
       <strong>counter-increment:</strong> increments the counter. the value is of this property is the name of the counter that you want to increment<br>
-      <strong>content()</strong> use :before speudo class and content() to add the index to the elements<br>
-      <strong>counter()</strong> function to retreive the value of the counter
+      <strong>content()</strong> use :before pseudo class and content() to add the index to the elements<br>
+      <strong>counter()</strong> function to retrieve the value of the counter
     </p>
     <p>
       So now we know all of this, let's try it in real life:
@@ -461,14 +461,14 @@ h2:before {
     <h3 id="filter">filter</h3>
     <p>
       the filter property applies effects to html elements and svgs. It comes with predefined filter functions like blur, brightness, contrast, sepia; and you can also apply custom SVG filters.
-      Let's first take a look at the standard functions, then see how we can use that to create cool filters, like instagram filters; then how to use the SVG filters. A very cool thing is that you can chain several functions.
+      Let's first take a look at the standard functions, then see how we can use that to create cool filters, like Instagram filters; then how to use the SVG filters. A very cool thing is that you can chain several functions.
     </p>
     <div class="embed">
       <iframe height='400' scrolling='no' title='filters' src='//codepen.io/gregh/embed/GrJNdJ/?height=400&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/GrJNdJ/'>filters</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
       </iframe>
     </div>
     <p>
-      There's one more trick, you can do with filters. You can convert base color into some other, target, color using filters. You do it by manipulating Hue, Saturation and Lightness. For doing so, you have to convert colors from RGB to HSL, then substract the H, S, and L values. I've created a simple calculator, that generates a filter that converting base color into approximately the given target color:
+      There's one more trick, you can do with filters. You can convert base color into some other, target, color using filters. You do it by manipulating Hue, Saturation and Lightness. For doing so, you have to convert colors from RGB to HSL, then subtract the H, S, and L values. I've created a simple calculator, that generates a filter that converting base color into approximately the given target color:
     </p>
     <div class="embed">
       <iframe height='449' scrolling='no' title='Converting colors using filters' src='//codepen.io/gregh/embed/ygNVMX/?height=449&theme-id=0&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/ygNVMX/'>Converting colors using filters</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
@@ -477,7 +477,7 @@ h2:before {
 
     <h3 id="flex">flex</h3>
     <p>
-      You've probably used it often. It's most often used as <code>flex: 1</code>, but it's actually a shorthand property for flex-grow, flex-shring and flex-basis. The default value for flex is <code>0 1 auto</code>
+      You've probably used it often. It's most often used as <code>flex: 1</code>, but it's actually a shorthand property for flex-grow, flex-shrink and flex-basis. The default value for flex is <code>0 1 auto</code>
     </p>
 
     <h3 id="flex-basis">flex-basis</h3>
@@ -495,17 +495,17 @@ h2:before {
       this property specifies if the browser shall use kerning information stored in the font or disable it. It accepts the following values:
     </p>
     <p>
-      <strong>auto:</strong> the browser desides whether to use kerning information stored in font or not<br>
+      <strong>auto:</strong> the browser decides whether to use kerning information stored in font or not<br>
       <strong>normal:</strong> kerning is applied<br>
       <strong>none:</strong> prevent browser from using kerning information
     </p>
     <p>
-      In practice you will probably not use this property, but will use "letter-spacing" for specifing how the space is distributed between letters. Remember, those properties are not the same. Letter-spacing does not affect font kerning, it just increases or descreases distance between letters.
+      In practice you will probably not use this property, but will use "letter-spacing" for specifying how the space is distributed between letters. Remember, those properties are not the same. Letter-spacing does not affect font kerning, it just increases or decreases distance between letters.
     </p>
 
     <h3 id="font-smoothing">font-smoothing</h3>
     <p>
-      font-smoothing property controls how anti-aliasing is applied to the font. The problem is that after the standard browser anit-alising your font may look slightly different from what you see in design.
+      font-smoothing property controls how anti-aliasing is applied to the font. The problem is that after the standard browser anti-aliasing your font may look slightly different from what you see in design.
     </p>
 
     <p>
@@ -515,7 +515,7 @@ h2:before {
       <strong>-webkit-font-smoothing:</strong>
     </p>
     <p>
-      <strong>none:</strong> turn of anti-alisain, display fonts with sharp edges<br>
+      <strong>none:</strong> turn off anti-aliasing, display fonts with sharp edges<br>
       <strong>antialiased:</strong> smooth the font on a pixel level, this make light text look lighter on dark backgrounds<br>
       <strong>subpixel-antialiased:</strong> smooth the font on a subpixel level. this will give the great output on non-retina displays
     </p>
@@ -523,7 +523,7 @@ h2:before {
       <strong>-moz-osx-font-smoothing:</strong>
     </p>
       <strong>auto:</strong> let browser choose the smoothing method<br>
-      <strong>grayscale:</strong> render text with grayscal antialiasing. this gives similar output as "antialised" on webkit, and makes light text look lighter on dark backgrounds.
+      <strong>grayscale:</strong> render text with grayscale antialiasing. this gives similar output as "antialiased" on webkit, and makes light text look lighter on dark backgrounds.
     </p>
     <div class="embed">
       <iframe height='265' scrolling='no' title='font-smoothing' src='//codepen.io/gregh/embed/PWwoVd/?height=265&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/PWwoVd/'>font-smoothing</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
@@ -542,7 +542,7 @@ h2:before {
 
     <h3 id="grid">grid</h3>
     <p>
-      the grid css layout system lets us create two dimetional grids without problems (by saying problems I mean floats, clears etc). Though it's not safe to use it (as of Dec 2016) it's a good idea to learn how to use it now. Here's a good resource: <a href="https://css-tricks.com/snippets/css/complete-guide-grid/" target="_blank">https://css-tricks.com/snippets/css/complete-guide-grid/</a>
+      the grid css layout system lets us create two-dimensional grids without problems (by saying problems I mean floats, clears etc). Though it's not safe to use it (as of Dec 2016) it's a good idea to learn how to use it now. Here's a good resource: <a href="https://css-tricks.com/snippets/css/complete-guide-grid/" target="_blank">https://css-tricks.com/snippets/css/complete-guide-grid/</a>
     </p>
     <p>
       Let's quickly see how this works. Grid consists of the container and the items inside it. Set the following css to the container: <code>display: grid;</code>
@@ -575,18 +575,18 @@ h2:before {
 
     <h3 id="hyphens">hyphens</h3>
     <p>
-      this propery specifies how the browser hypenates the text.
+      this property specifies how the browser hyphenates the text.
     </p>
     <p>
-      <strong>none:</strong> no hypens applied, the text will overflow the container<br>
-      <strong>auto:</strong> browser will automatically hypenate the text<br>
-      <strong>manual:</strong> manally specify potential break points
+      <strong>none:</strong> no hyphens applied, the text will overflow the container<br>
+      <strong>auto:</strong> browser will automatically hyphenate the text<br>
+      <strong>manual:</strong> manually specify potential break points
     </p>
     <p>
       Now there are two line break characters you can use: 
     </p>
     <p>
-      <strong>&ampshy;</strong> - will let the browser know that it's a place in text where the hypenation may be performed if necessary<br>
+      <strong>&ampshy;</strong> - will let the browser know that it's a place in text where the hyphenation may be performed if necessary<br>
       <strong>&amphyphen;</strong> - will render the hyphen even if the line is not broken
     </p>
     <div class="embed">
@@ -600,7 +600,7 @@ h2:before {
     </p>
     <p>
       <strong>auto:</strong> (default) the browser automatically applies aliasing<br>
-      <strong>crisp-egdes:</strong> the contrast and edges are preserved, so that they are not smoothed or blured when scaled<br>
+      <strong>crisp-edges:</strong> the contrast and edges are preserved, so that they are not smoothed or blurred when scaled<br>
       <strong>pixelated:</strong> this value is applied only to the upsized images and makes the image appear pixelated
     </p>
     <div class="embed">
@@ -617,7 +617,7 @@ h2:before {
     </p>
     <pre>
 ul {
-  list-style-image: url('sqpurple.gif');
+  list-style-image: url('square.gif');
 }
     </pre>
 
@@ -773,8 +773,8 @@ img {
 
     <h3 id="perspective">perspective</h3>
     <p>
-      The perspective CSS propery gives the element a perspective. it's value is the distance from the viewport to the elements z=0 plane.
-      The value is lenght, that can be represented in px or em, or "none" keyword.
+      The perspective CSS property gives the element a perspective. it's value is the distance from the viewport to the elements z=0 plane.
+      The value is length, that can be represented in px or em, or "none" keyword.
     </p>
     <p>
       <strong>Note:</strong> the perspective property affects only 3D transformed elements. 
@@ -798,7 +798,7 @@ img {
       values specific to SVG elements:
     </p>
     <p>
-      <strong>visiblePainted:</strong> the filled and stroked part of the element are a target. visibily has to be set to visible and stroke value to other than none<br>
+      <strong>visiblePainted:</strong> the filled and stroked part of the element are a target. visibility has to be set to visible and stroke value to other than none<br>
       <strong>visibleFill:</strong> only the filled part of the element is a target. visibility has to be set to visible<br>
       <strong>visibleStroke:</strong> only the stroked part of the element is a target. stroke value has to be other than none<br>
       <strong>visible:</strong> the filled and stroked part of the element are a target when the visibility of the element is set to visible<br>
@@ -827,12 +827,12 @@ img {
       </iframe>
     </div>
     <p class="rerun">
-      Currently works on Firefox, Safary and Chrome Canary 56.
+      Currently works on Firefox, Safari and Chrome Canary 56.
     </p>
 
     <h3 id="resize">resize</h3>
     <p>
-      Resize property defines whether the element can be resized by user. You can make an element resizeable vertical, horizontally or both. resize accepts the following values:
+      Resize property defines whether the element can be resized by user. You can make an element resizeable vertically, horizontally or both. resize accepts the following values:
     </p>
     <p>
       <strong>none:</strong> element is not resizable. This is the default value for most of the element, but textarea has value "both" by default<br>
@@ -846,7 +846,7 @@ img {
 
     <h3 id="shape-outside">shape-outside</h3>
     <p>
-      This CSS property let's us make the content wrap around an element. Maybe it's a round image and you want text to wrap around that circle. The property shall be applied to the element which you want to wrap the coutent around. It accepts the following values:
+      This CSS property let's us make the content wrap around an element. Maybe it's a round image and you want text to wrap around that circle. The property shall be applied to the element which you want to wrap the content around. It accepts the following values:
     </p>
     <p>
       <strong>Keyword values:</strong>
@@ -872,7 +872,7 @@ img {
 
     <h3 id="supports">@supports</h3>
     <p>
-      This CSS at-rule gives the ability to check if the broser supports the following properties.
+      This CSS at-rule gives the ability to check if the browser supports the following properties.
       You can check if it supports a specific value or the property itself:
     </p>
     <pre>
@@ -905,7 +905,7 @@ img {
     </p>
     <p>
       CSS variables are defined by authors and represent specific values the can be used multiple times in the document.
-      var() function can be used as value of any propery, but cannot be used as a propery or selector. The first value of the function is the name of the custom property; the second is an optional fallback value, which is used if the first argument is invalid.
+      var() function can be used as value of any property, but cannot be used as a property or selector. The first value of the function is the name of the custom property; the second is an optional fallback value, which is used if the first argument is invalid.
     </p>
     <p>
       Let's take a look at the syntax:
@@ -970,12 +970,12 @@ body {
 
     <h3 id="transition-timing-function">transition-timing-function</h3>
     <p>
-      You know what this propery does if you use CSS transitions or animations. It specifies the speed curve of the transition effect.
+      You know what this property does if you use CSS transitions or animations. It specifies the speed curve of the transition effect.
       But here's two little known values:
     </p>
     <p>
-      <strong>steps(n,start|end):</strong> instead of specifing smooth transiting with such timing functions as ease, this completed the animation in number of steps you define. second parameter is optional and specifies at which point within the interval shall the change occur. The default values for the second parameter is end. You can also use the shorthand functions <code>step-start(n)</code> and <code>step-end(n)</code><br>
-      <strong>cubic-bezier(n,n,n,n):</strong> your own cubic bezier function
+      <strong>steps(n, start|end):</strong> instead of specifying smooth transiting with such timing functions as ease, this completed the animation in number of steps you define. second parameter is optional and specifies at which point within the interval shall the change occur. The default values for the second parameter is end. You can also use the shorthand functions <code>step-start(n)</code> and <code>step-end(n)</code><br>
+      <strong>cubic-bezier(n, n, n, n):</strong> your own cubic bezier function
     </p>
     <div class="embed">
       <iframe height='265' scrolling='no' title='transition-timing-function' src='//codepen.io/gregh/embed/mRypgY/?height=265&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/mRypgY/'>transition-timing-function</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
@@ -997,12 +997,12 @@ body {
     </p>
     <p>
       <strong>vh:</strong> 1 vh is equal to 1/100 of viewport height<br>
-      <strong>vw:</strong> 1 vw is equal to 1/100 ov viewport width<br>
+      <strong>vw:</strong> 1 vw is equal to 1/100 of viewport width<br>
       <strong>vmin:</strong> it is the least value of vh and vw<br>
       <strong>vmax:</strong> is the largest value of those two
     </p>
     <p>
-      So for a screen that has a viewport 1280x655px, 1vh is equal to 6.55 pixels, 1vw is equal to 12.8pixels, vmin is 6.55 pixels (least value) and vmax is 12.8 pixels (largest value)
+      So for a screen that has a viewport 1280x655px, 1 vh is equal to 6.55 pixels, 1 vw is equal to 12.8pixels, vmin is 6.55 pixels (least value) and vmax is 12.8 pixels (largest value)
     </p>
 
     <h3 id="white-space">white-space</h3>
@@ -1037,7 +1037,7 @@ body {
 
     <h3 id="word-spacing">word-spacing</h3>
     <p>
-      This is the equivalent of letter-spacing for words. You can increase or descrease the whitespace between words.
+      This is the equivalent of letter-spacing for words. You can increase or decrease the whitespace between words.
       the standard value for this property "normal" uses the default size of whitespace (0.25em)
       any length value, positive or negative, can be used expressed in px, pt, em etc.
     </p>
@@ -1076,10 +1076,10 @@ transform: translate3d(0, 0, 0);
 
     <h3 id="writing-mode">writing-mode</h3>
     <p>
-      This property defines whether the text is layed out horizontally, vertically and the direction.
+      This property defines whether the text is laid out horizontally, vertically and the direction.
     </p>
     <p>
-      <strong>horizontal-tb:</strong> contont flows from left to right, from top to bottom<br>
+      <strong>horizontal-tb:</strong> content flows from left to right, from top to bottom<br>
       <strong>vertical-rl:</strong> content flows from top to bottom, from right to left<br>
       <strong>vertical-lr:</strong> content flows from top to bottom, from left to right
     </p>
@@ -1093,13 +1093,13 @@ transform: translate3d(0, 0, 0);
 
     <h3 id="webkit-autofill">:-webkit-autofill</h3>
     <p>
-      This CSS pseudo-class mathces input element the is autofilled by the browser.
+      This CSS pseudo-class matches input element the is autofilled by the browser.
       This way you can change the style of an autofilled input in Chrome, because they have yellow background by default.
     </p>
 
     <h3 id="webkit-overflow-scrolling">-webkit-overflow-scrolling</h3>
     <p>
-      This propertly lets us the the iOS momentum scrolling on elements on touch devices. There are two values:
+      This property lets us the the iOS momentum scrolling on elements on touch devices. There are two values:
     </p>
     <p>
       <strong>auto:</strong> use normal scrolling, where the scrolling stops at the moment when you remove your finger from screen<br>
@@ -1125,7 +1125,7 @@ transform: translate3d(0, 0, 0);
 }
     </pre>
     <p>
-      There's also a way to autohide scrollbards on IE10+ and Edge.
+      There's also a way to autohide scrollbars on IE10+ and Edge.
     </p>
     <pre>
 html {

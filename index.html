@@ -28,18 +28,19 @@
         content: counter(section) ") ";
       }
       p.rerun {
-          margin-top: -24px;
-          font-size: 16px;
-          font-style: italic;
+        margin-top: -24px;
+        font-size: 16px;
+        font-style: italic;
       }
       .main-col {
-        width: 65%;
+        width: 900px;
         box-sizing: border-box;
         line-height: 1.45em;
-        max-width: 832px;
+        max-width: 900;
+        margin: 0 auto;
       }
       article {
-        padding: 4% 10%;
+        padding: 86px;
       }
       code {
         background: #eee;
@@ -66,15 +67,16 @@
       pre {
         background-color: #1D1F21;
         color: #9B869C;
-        padding: 20px 20px 0 20px;
+        padding: 20px;
         box-sizing: border-box;
         overflow-y: scroll;
+        margin: 0 -86px 20px -86px;
       }
       b, strong {
         font-weight: bold;
       }
       .embed {
-        margin: 0 -12.5% 20px -12.5%;
+        /*margin: 0 -86px 20px -86px;*/
       }
       .columns {
         column-count: 2;
@@ -86,6 +88,9 @@
       .text-center {
         text-align: center;
       }
+      img {
+        max-width: 100%;
+      }
     </style>
   </head>
   <body>
@@ -95,1053 +100,375 @@
   <article>
 
     <header>
-      50 CSS properties you <span class="italic">(probably)</span> didn't know about
+      Introduction to Web Audio API
     </header>
 
     <p>
-      "Can I do it with CSS?", "Shall I use JavaScript for that?", "What else can I create with CSS?". Sometimes you look at some great code and wonder how they learned those properties, or you notice you're stackoverflowing too often when writing CSS code. I once decided to learn all of the CSS properties, so I spent a lot of time reading references, writing code and happily solving old problems more effectively with my new knowledge.
+      Web Audio API lets add sound to our applications. It makes your apps and games more fun and lets you build various music applications like drum machines and synthesizers. In this article we'll learn working with the Web Audio API and build simple, but very fun projects.
+    </p>
+
+    <h3>Getting Started</h3>
+    <p>
+      All audio operations in Web Audio API are handled inside an audio context. Each basic audio operation is performed with audio nodes that are chained together, forming an audio routing graph. Before playing any sounds, you shall create an audio context, which is very similar to how we create context to draw inside an HTML canvas. Here's how we create an audio context: 
     </p>
     <p>
-      After using many new CSS properties for a long time, I now want to show you 50 most interesting of them, with use cases, code examples and CodePen samples that you can play around with. I also included properties that are still experimental, but will soon be used, so you can become a pioneer; well-known properties that have interesting but little-known values, so you can integrate them more deeply into your projects; and webkit extensions, that work only in the webkit browsers, so you can give the Chrome, Safari and Opera users a greater experience.
+      <code>var context = new (window.AudioContext || window.webkitAudioContext)();</code>
     </p>
-    <div class="columns">
+    <p>
+      Safari requires a webkit prefix to support AudioContext, so you should use that line instead of <code>new AudioContext();</code>
+    </p>
+    <p>
+      Normally the Web Audio API workflow looks lie this:
+      Create audio context -> create source -> connect filter nodes -> connect to destination
+    </p>
+    <p>
+      There are three types of sources: 
       <ol>
-        <li><a href="#all">all</a></li>
-        <li><a href="#angle">angle</a></li>
-        <li><a href="#animation-fill-mode">animation-fill-mode</a></li>
-        <li><a href="#animation-iteration-count">animation-iteration-count</a></li>
-        <li><a href="#backface-visibility">backface-visibility</a></li>
-        <li><a href="#background-attachment">background-attachment</a></li>
-        <li><a href="#background-blend-mode">background-blend-mode</a></li>
-        <li><a href="#background-clip">background-clip</a></li>
-        <li><a href="#background-origin">background-origin</a></li>
-        <li><a href="#box-decoration-break">box-decoration-break</a></li>
-        <li><a href="#calc">calc</a></li>
-        <li><a href="#column">column</a></li>
-        <li><a href="#content">content</a></li>
-        <li><a href="#counters">counters</a></li>
-        <li><a href="#currentcolor">currentColor</a></li>
-        <li><a href="#filter">filter</a></li>
-        <li><a href="#flex">flex</a></li>
-        <li><a href="#flex-basis">flex-basis</a></li>
-        <li><a href="#flex-flow">flex-flow</a></li>
-        <li><a href="#font-kerning">font-kerning</a></li>
-        <li><a href="#font-smoothing">font-smoothing</a></li>
-        <li><a href="#font-variant">font-variant</a></li>
-        <li><a href="#grid">grid</a></li>
-        <li><a href="#hyphens">hyphens</a></li>
-        <li><a href="#image-rendering">image-rendering</a></li>
-        <li><a href="#list-style-image">list-style-image</a></li>
-        <li><a href="#list-style-position">list-style-position</a></li>
-        <li><a href="#object-fit">object-fit</a></li>
-        <li><a href="#orphans">orphans</a></li>
-        <li><a href="#order">order</a></li>
-        <li><a href="#overflow-wrap">overflow-wrap</a></li>
-        <li><a href="#page-break">page-break</a></li>
-        <li><a href="#percentage">percentage</a></li>
-        <li><a href="#perspective">perspective</a></li>
-        <li><a href="#pointer-events">pointer-events</a></li>
-        <li><a href="#position">position</a></li>
-        <li><a href="#resize">resize</a></li>
-        <li><a href="#shape-outside">shape-outside</a></li>
-        <li><a href="#supports">@supports</a></li>
-        <li><a href="#var">var()</a></li>
-        <li><a href="#table-layout">table-layout</a></li>
-        <li><a href="#text-transform">text-transform</a></li>
-        <li><a href="#transition-timing-function">transition-timing-function</a></li>
-        <li><a href="#vh">vh, vw, vmin, vmax</a></li>
-        <li><a href="#white-space">white-space</a></li>
-        <li><a href="#word-break">word-break</a></li>
-        <li><a href="#word-spacing">word-spacing</a></li>
-        <li><a href="#will-change">will-change</a></li>
-        <li><a href="#writing-mode">writing-mode</a></li>
-        <li><a href="#webkit-autofill">-webkit-autofill</a></li>
-        <li><a href="#webkit-overflow-scrolling">-webkit-overflow-scrolling</a></li>
-        <li><a href="#webkit-touch-callout">-webkit-touch-callout</a></li>
-        <li><a href="#webkit-scrollbar">-webkit-scrollbar</a></li>
-        <li><a href="#animatable">Animatable</a></li>
-      </ol>
-    </div>
-
-    <h3 id="all">all</h3>
-    <p>
-      This property resets all (apart from unicode-bidi and direction) properties to their initial or inherited state.
-      It accepts the following values: initial, inherit, unset. 
-    </p>
-    <p>
-      <strong>initial:</strong> changes all the properties of the element or the element's parent their initial value<br>
-      <strong>inherit:</strong> changes all the properties of the element or the element's parent to their parent value<br>
-      <strong>unset:</strong> changes all the properties of the element or the element's parent to their parent value if they are inheritable or to their own value if not<br>
-    </p>
-    <div class="embed">
-      <iframe height='312' scrolling='no' title='MJWpeb' src='//codepen.io/gregh/embed/MJWpeb/?height=312&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/MJWpeb/'>MJWpeb</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-
-    <p>
-      Documentations say it works in Chrome, Opera, Firefox, IE11 and doesn't work in Safari. I tested it in Safari 10 and it works.
-    </p>
-
-    <h3 id="angle">angle~</h3>
-    <p>
-      Angle is a CSS data type. It represents angle values. We are used to using something like "transform: rotate(180deg)". You can not only use "deg", but "grad", "rad" and "turn" as well. This means you can not only use "transform: rotate(180deg)", for example, but <code>transform: rotate(0.5turn)</code> as well. This may be useful for animating elements, when you want to rotate something 4 times, you now can use rotate(4turn). 
-    </p>
-    <p>
-      I tested it in Chrome 54, Opera 41, Firefox 50 and Safari 10.
-    </p>
-    <div class="embed">
-      <iframe height='400' scrolling='no' title='angle~' src='//codepen.io/gregh/embed/zNOKNW/?height=400&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/zNOKNW/'>angle~</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-    <p class="rerun">
-      Click <strong>"Rerun"</strong> to see the example again.
-    </p>
-
-    <h3 id="animation-fill-mode">animation-fill-mode</h3>
-    <p>
-      This property specifies what styles are applied to the element when the animation is not playing. Now this thing is very useful. Imagine if you want you element to fade out. You will create an animation that is running from opacity 1 to 0. After the animation is complete it will jump back to it's initial state. So we actually need the element stay transparent after the animation is completed. 
-    </p>
-    <div class="embed">
-      <iframe height='300' scrolling='no' title='xgKRbo' src='//codepen.io/gregh/embed/xgKRbo/?height=300&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/xgKRbo/'>xgKRbo</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-    <p>
-      Now let's add <code>animation-fill-mode: forwards;</code> and see how the element keeps the styling it received in the last keyframe. That's when we use the "animation-fill-mode". 
-    </p>
-    <div class="embed">
-      <iframe height='312' scrolling='no' title='Fading out and keep styling' src='//codepen.io/gregh/embed/EZYNjJ/?height=312&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/EZYNjJ/'>Fading out and keep styling</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-    <p class="rerun">
-      Click <strong>"Rerun"</strong> to see the example again.
-    </p>
-    <p>
-      It accepts the following values: none, forwards, backwards, both, initial, inherit.
-    </p>
-    <p>
-      <strong>none:</strong> (default) Element gets it's initial styling when the animation is not executing<br>
-      <strong>forwards:</strong> animation will apply the values set by the last keyframe executed. Note, that it may not be the state of the "100%" or "to" keyframe. If you set animation-iteration-count to 1.5, the last keyframe will be the 50% keyframe. One more thing that you shall take into account, is that if your animation-direction set to reverse, the last keyframe will be the "0%" or "from" keyframe<br>
-      <strong>backwards:</strong> will apply the property values defines in the keyframe that is played at the beginning of the animation<br>
-      <strong>both:</strong> the animation will follow the rules of both forwards and backwards<br>
-      <strong>initial:</strong> sets animation-fill-mode to it's default value<br>
-      <strong>inherit:</strong> element inherits animation-fill-mode value from it's parent<br>
-    </p>
-    <p>
-      For example you can see in the popular library animate.css, the .animated class uses <code>animation-fill-mode: both</code>
-    </p>
-
-    <h3 id="animation-iteration-count">animation-iteration-count</h3>
-    <p>
-      If you have used CSS animations, then you know what "animation-iteration-count" property does. It defines the number of times the animation repeats. But it can also be a non integer value, so <code>animation-iteration-count: 1.5</code> will play one full animation cycle plus half of the cycle.
-    </p>
-    <div class="embed">
-      <iframe height='400' scrolling='no' title='JEPbqR' src='//codepen.io/gregh/embed/JEPbqR/?height=400&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/JEPbqR/'>JEPbqR</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-
-    <h3 id="backface-visibility">backface-visibility</h3>
-    <p>
-      This property specifies whether the back side of the element is visible when the element is rotated. It is used with 3D transforms. Accepts the following values: visible, hidden, initial, inherit
-    </p>
-    <p>
-      <strong>visible:</strong> (default) back side of element will be visible, when rotated<br>
-      <strong>hidden:</strong> back side of element is not visible<br>
-      <strong>initial:</strong> sets the property to it's default (visible) value<br>
-      <strong>inherit:</strong> get the property value from it's parent
-    </p>
-    <p>
-      These example will illustrate that:
-    </p>
-    <div class="embed">
-      <iframe height='400' scrolling='no' title='backface-visibility' src='//codepen.io/gregh/embed/jyOrdO/?height=400&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/jyOrdO/'>backface-visibility</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-    <div class="embed">
-      <iframe height='427' scrolling='no' title='PWozML' src='//codepen.io/gregh/embed/PWozML/?height=427&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/PWozML/'>PWozML</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-
-    <h3 id="background-attachment">background-attachment</h3>
-    <p>
-      We sort of forgot this property, as we do not use colorful background images often, but still, it can be useful.
-      If specifies if the background image stays fixed within the viewport when you scroll the page or scrolls along with the page.
-      It accepts the following values: scroll, fixed, local, initial and inherit.
-    </p>
-    <p>
-      <strong>Scroll:</strong> (default) background is fixed to the element and does not scroll with it's contents<br>
-      <strong>Fixed:</strong> the background stays fixed when you scroll the page (or element)<br>
-      <strong>Local:</strong> scrolls along with the elements contents, if the element is scrollable (elements with "overflow: scroll" for example)
-    </p>
-    <div class="embed">
-      <iframe height='380' scrolling='no' title='background-attachment' src='//codepen.io/gregh/embed/ZLEBNZ/?height=380&theme-id=0&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/ZLEBNZ/'>background-attachment</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-
-    <h3 id="background-blend-mode">background-blend-mode</h3>
-    <p>
-      This property specifies how element's background images, gradients and colors blend with each other. You can add a background image and background color, then set the blend-mode to "lighten". You can also specify several blend-modes, one per background.
-    </p>
-    <p>
-      The following blending modes can be used: 
-      <ul>
-        <li>color</li>
-        <li>color-burn</li>
-        <li>color-dodge</li>
-        <li>darken</li>
-        <li>difference</li>
-        <li>exclusion</li>
-        <li>hard-light</li>
-        <li>hue</li>
-        <li>lighten</li>
-        <li>luminosity</li>
-        <li>multiply</li>
-        <li>overlay</li>
-        <li>saturation</li>
-        <li>screen</li>
-        <li>soft-light</li>
-      </ul>
-    </p>
-    <div class="embed">
-      <iframe height='525' scrolling='no' title='background-blend-mode' src='//codepen.io/gregh/embed/xgxqWz/?height=525&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/xgxqWz/'>background-blend-mode</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-
-    <h3 id="background-clip">background-clip</h3>
-    <p>
-      background-clip defines the area of the element where the background is applied. You can make the background go underneath it's border or fill only the area of it's contents. It accepts the following values: border-box, content-box, padding-box, text, inherit and initial.
-    </p>
-    <p>
-      <strong>border-box:</strong> (default) allows background extent to the outer edge of the border<br>
-      <strong>content-box:</strong> the background is clipped to the content box of the element<br>
-      <strong>padding-box:</strong> the background is clipped to the outer edge of the element's padding, so it's applied to the content, the padding, but not underneath it's border<br>
-      <strong>text:</strong> the background is clipped to the foreground text. You can do some cool things using that feature, like this
-    </p>
-    <div class="embed">
-      <iframe height='265' scrolling='no' title='background-clip' src='//codepen.io/gregh/embed/dNyWRP/?height=265&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/dNyWRP/'>background-clip</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-
-    <h3 id="background-origin">background-origin</h3>
-    <p>
-      This property defines if the background is applied to only the element's content area, or padding/border areas as well. It accepts this values: border-box, content-box, padding-box, text, inherit and initial.
-    </p>
-    <p>
-      "How is this different from background-clip?" - you wonder. The difference is that "background-clip" crops the background, and "background-origin" resizes it.
-    </p>
-
-    <h3 id="box-decoration-break">box-decoration-break</h3>
-    <p>
-      This property specifies how the element's background, padding, border, box-shadow, margin and clip are applied when it's wrapped into multiple lines.
-      If we have our text wrapped intro multiple lines, it would normally increase the element's height, however "box-decoration-break" can apply the styling to each line separately, instead of the whole element.
-      The accepted values are: clone, slice, initial and inherit.
-    </p>
-    <p>
-      <strong>clone:</strong> every fragment of the element receives styling, box shadows and padding are applied to each fragment individually<br>
-      <strong>slice:</strong> the element is rendered as if the element is not fragmented
-    </p>
-    <p>
-      <strong>Note:</strong> Unfortunately you can use it only on inline elements. According to <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box-decoration-break" target="_blank">Mozilla documentation</a> you can only use it on Firefox and Chrome inline elements, but I tested it and current browsers show different results. It works on Firefox and Chrome 54, Opera 41 and Safari 10 with the "-webkit" prefix.
-    </p>
-    <p>
-      This CodePen illustrates how it works:
-    </p>
-    <div class="embed">
-      <iframe height='265' scrolling='no' title='oBNVzY' src='//codepen.io/gregh/embed/oBNVzY/?height=265&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/oBNVzY/'>oBNVzY</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-
-    <h3 id="calc">calc()</h3>
-    <p>
-      calc() is a function that makes calculations to determine the property value. You can use something like <code>width: calc(100% - 32px)</code>. This will make element full width minus 32 pixels. It can be very useful for setting column width and subtract the margins. No need for nesting two elements and giving padding to the parent element to achieve the same result.
-    </p>
-    <p>
-      It accepts an expression with addition, subtraction, multiplication and division operators. Operands can be any syntax length values. 
-      You can even do something like <code>calc(var(--someValue) / 2 - 2em)</code>
-    </p>
-    <p>
-      It is still risky to use it on older browsers, although it is accepted by current versions of browsers: <a href="http://caniuse.com/#feat=calc" target="_blank">http://caniuse.com/#feat=calc</a>
-    </p>
-    <p>
-      If you use it consider adding fallback properties for old browsers:
-      <pre>
-width: 98%; /* fallback for browsers without support for calc() */    
-width: calc(100% - 1em);
-      </pre>
-    </p>
-
-    <h3 id="column">column-*</h3>
-    <p>
-      "column-count" property specifies the number of columns an element has. <code>column-count: 3</code> will spread the element text into 3 columns. You can apply it to inline-block, block elements (except table). So this will not work on an element with display: table, but will work on display: table-cell.
-      The fun thing is that it's animatable, so you can change the number of columns with an animation, but unfortunately timing functions will not work on the column-count property.
-    </p>
-    <p>
-      <strong>column-gap:</strong> property specifies the size of gap between the columns<br>
-      <strong>column-rule:</strong> is a vertical line drawn between the column visually separating them. It's a shorthand for setting this 3 properties (it is very much like border-*)<br>
-      <strong>column-rule-color:</strong> specifies the color of the line. The value can be a named color (red, green, transparent), hex, rgb/rgba, hsl/hsla color values<br>
-      <strong>column-rule-style:</strong> specifies the style of the line. It accepts the following values: none, hidden, dotted, dashed, solid, double, groove, ridge, inset, outset<br>
-      <strong>column-rule-width:</strong> specifies the width of the line and accepts named values (thin, medium, thick), px, em, initial, inherit and unset
-    </p>
-    <p>
-      Good thing is that this column stuff works on all browsers and comes un-prefixed on Chrome 50.
-    </p>
-    <div class="embed">
-      <iframe height='320' scrolling='no' title='pRoYMv' src='//codepen.io/gregh/embed/pRoYMv/?height=320&theme-id=0&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/pRoYMv/'>pRoYMv</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-
-    <h3 id="content">content</h3>
-    <p>
-      I assume you are familiar with a lot of use cases for content. I just wanted to show one more trick you can do with that.
-      It's a neat way to create comma-separated lists
-      <pre>
-ul > li:not(:last-child):after {
-  content: ", ";
-}
-      </pre>
-    </p>
-
-    <h3 id="counters">counters</h3>
-    <p>
-      Counters let us give numbers (indexes) to elements. If there are elements on the page that repeat, you can give number to them. For example, you have an article, with several topics, each topic has an H1 heading in the beginning, and you have H2 subheadings. You can automatically number the headings.
-    </p>
-    <p>
-      There are four properties to work with counters:
-    </p>
-    <p>
-      <strong>counter-reset:</strong> resets or creates a counter. the value of this property is the name of the counter that you define<br>
-      <strong>counter-increment:</strong> increments the counter. the value is of this property is the name of the counter that you want to increment<br>
-      <strong>content()</strong> use :before pseudo class and content() to add the index to the elements<br>
-      <strong>counter()</strong> function to retrieve the value of the counter
-    </p>
-    <p>
-      So now we know all of this, let's try it in real life:
-      <pre>
-body {
-  counter-reset: heading; // init the counter for headings
-              // note you can give any other name
-}
-h1 {
-  counter-increment: heading; // increments the counter on every H1 tag
-  counter-reset: subheading;  // here we init or reset the subheading
-                // so that we get 1.1, 1.2, 1.3, then after new heading it will go 2.1, 2.2, 2.3
-}
-h1:before {
-  content: counter(heading) " - "; // using :before selector and counter() function we can add the index to the heading
-}
-h2 {
-  counter-increment: subheading; // increment the subheading counter on every H2 tag
-}
-h2:before {
-  content: counter(heading) "." counter(subheading) " - ";
-}
-      </pre>
-    </p>
-    <div class="embed">
-      <iframe height='400' scrolling='no' title='counters' src='//codepen.io/gregh/embed/MJWRXm/?height=400&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/MJWRXm/'>counters</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-
-    <h3 id="currentcolor">currentColor~</h3>
-    <p>
-      This keyword represents the calculated value of the elements color property.
-      <pre>
-.parent {
-  color: #ccc;
-  border: 1px solid currentColor;
-}
-
-.child {
-  background: currentColor;
-}
-      </pre>
-      Can be also useful for applying color to the SVG icons inside buttons
-
-    </p>
-
-    <h3 id="filter">filter</h3>
-    <p>
-      the filter property applies effects to html elements and svgs. It comes with predefined filter functions like blur, brightness, contrast, sepia; and you can also apply custom SVG filters.
-      Let's first take a look at the standard functions, then see how we can use that to create cool filters, like Instagram filters; then how to use the SVG filters. A very cool thing is that you can chain several functions.
-    </p>
-    <div class="embed">
-      <iframe height='400' scrolling='no' title='filters' src='//codepen.io/gregh/embed/GrJNdJ/?height=400&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/GrJNdJ/'>filters</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-    <p>
-      There's one more trick, you can do with filters. You can convert base color into some other, target, color using filters. You do it by manipulating Hue, Saturation and Lightness. For doing so, you have to convert colors from RGB to HSL, then subtract the H, S, and L values. I've created a simple calculator, that generates a filter that converting base color into approximately the given target color:
-    </p>
-    <div class="embed">
-      <iframe height='449' scrolling='no' title='Converting colors using filters' src='//codepen.io/gregh/embed/ygNVMX/?height=449&theme-id=0&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/ygNVMX/'>Converting colors using filters</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-
-    <h3 id="flex">flex</h3>
-    <p>
-      You've probably used it often. It's most often used as <code>flex: 1</code>, but it's actually a shorthand property for flex-grow, flex-shrink and flex-basis. The default value for flex is <code>0 1 auto</code>
-    </p>
-
-    <h3 id="flex-basis">flex-basis</h3>
-    <p>
-      flex-basis defines the initial size of a flex element. It accepts width values like px, em and auto. It also accepts intrinsic sizing keywords: fill, max-content, min-content and fit-content. But those work only in Edge, wow!
-    </p>
-
-    <h3 id="flex-flow">flex-flow</h3>
-    <p>
-      flex-flow is a CSS shorthand for flex-direction and flex-wrap. It accepts the values of flex-direction (row, row-reverse, column, column-reverse), values of flex-wrap (nowrap, wrap, wrap-reverse). But you can also use it like <code>flex-flow: row nowrap;</code>
-    </p>
-
-    <h3 id="font-kerning">font-kerning</h3>
-    <p>
-      this property specifies if the browser shall use kerning information stored in the font or disable it. It accepts the following values:
-    </p>
-    <p>
-      <strong>auto:</strong> the browser decides whether to use kerning information stored in font or not<br>
-      <strong>normal:</strong> kerning is applied<br>
-      <strong>none:</strong> prevent browser from using kerning information
-    </p>
-    <p>
-      In practice you will probably not use this property, but will use "letter-spacing" for specifying how the space is distributed between letters. Remember, those properties are not the same. Letter-spacing does not affect font kerning, it just increases or decreases distance between letters.
-    </p>
-
-    <h3 id="font-smoothing">font-smoothing</h3>
-    <p>
-      font-smoothing property controls how anti-aliasing is applied to the font. The problem is that after the standard browser anti-aliasing your font may look slightly different from what you see in design.
-    </p>
-
-    <p>
-      here's the different attitudes Webkit and Firefox have:
-    </p>
-    <p>
-      <strong>-webkit-font-smoothing:</strong>
-    </p>
-    <p>
-      <strong>none:</strong> turn off anti-aliasing, display fonts with sharp edges<br>
-      <strong>antialiased:</strong> smooth the font on a pixel level, this make light text look lighter on dark backgrounds<br>
-      <strong>subpixel-antialiased:</strong> smooth the font on a subpixel level. this will give the great output on non-retina displays
-    </p>
-    <p>
-      <strong>-moz-osx-font-smoothing:</strong>
-    </p>
-      <strong>auto:</strong> let browser choose the smoothing method<br>
-      <strong>grayscale:</strong> render text with grayscale antialiasing. this gives similar output as "antialiased" on webkit, and makes light text look lighter on dark backgrounds.
-    </p>
-    <div class="embed">
-      <iframe height='265' scrolling='no' title='font-smoothing' src='//codepen.io/gregh/embed/PWwoVd/?height=265&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/PWwoVd/'>font-smoothing</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-
-    <h3 id="font-variant">font-variant</h3>
-    <p>
-      We have an interesting value here: small-caps, which will let us display the text in small capital letters.
-      This can be useful when used together with the CSS ::first-line selector
-    </p>
-    <div class="embed">
-      <iframe height='265' scrolling='no' title='font-variant' src='//codepen.io/gregh/embed/vgEYoj/?height=265&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/vgEYoj/'>font-variant</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-
-    <h3 id="grid">grid</h3>
-    <p>
-      the grid css layout system lets us create two-dimensional grids without problems (by saying problems I mean floats, clears etc). Though it's not safe to use it (as of Dec 2016) it's a good idea to learn how to use it now. Here's a good resource: <a href="https://css-tricks.com/snippets/css/complete-guide-grid/" target="_blank">https://css-tricks.com/snippets/css/complete-guide-grid/</a>
-    </p>
-    <p>
-      Let's quickly see how this works. Grid consists of the container and the items inside it. Set the following css to the container: <code>display: grid;</code>
-      Then you have to specify how the space is distributed between rows and columns. The values represent column sizes and you can also give names to them. 
-    </p>
-    <pre>
-.container {
-  display: grid;
-  grid-template-columns: 40px 50px auto 50px 40px;
-  grid-template-rows: 25% 100px auto;
-}
-    </pre>
-    <p>
-      Note in the "grid-template-columns" the first and fifth columns have 40px width, the second and fourth columns 50px width, and the column in the middle will get the rest of the space.
-      Let's see how to position item inside the container. We have to actually set the starting and ending points to the element. The item would have the following CSS applied to it:
-    </p>
-    <pre>
-.item {
-  grid-column-start: 2; // will start at the point where the second column starts
-  grid-column-end: 5;   // will end at the point where the second column starts
-  grid-row-start: 1;    // will start at the point where the first row starts
-  grid-row-end: 3;      // will end at the point where the third row starts
-}
-    </pre>
-    <p>
-      Cool, right?
-
-      You should check whether the browser supports the grid layout. I tell about the <strong>@supports</strong> media rule here.
-    </p>
-
-    <h3 id="hyphens">hyphens</h3>
-    <p>
-      this property specifies how the browser hyphenates the text.
-    </p>
-    <p>
-      <strong>none:</strong> no hyphens applied, the text will overflow the container<br>
-      <strong>auto:</strong> browser will automatically hyphenate the text<br>
-      <strong>manual:</strong> manually specify potential break points
-    </p>
-    <p>
-      Now there are two line break characters you can use: 
-    </p>
-    <p>
-      <strong>&ampshy;</strong> - will let the browser know that it's a place in text where the hyphenation may be performed if necessary<br>
-      <strong>&amphyphen;</strong> - will render the hyphen even if the line is not broken
-    </p>
-    <div class="embed">
-      <iframe height='235' scrolling='no' title='hyphens' src='//codepen.io/gregh/embed/QdwwyW/?height=235&theme-id=0&default-tab=html,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/QdwwyW/'>hyphens</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-
-    <h3 id="image-rendering">image-rendering</h3>
-    <p>
-      this property specifies how the image is rendered when it's scaled. While it may sound useless, as the browsers automatically apply aliasing, but it has 2 values that can be pretty useful in some cases:
-    </p>
-    <p>
-      <strong>auto:</strong> (default) the browser automatically applies aliasing<br>
-      <strong>crisp-edges:</strong> the contrast and edges are preserved, so that they are not smoothed or blurred when scaled<br>
-      <strong>pixelated:</strong> this value is applied only to the upsized images and makes the image appear pixelated
-    </p>
-    <div class="embed">
-      <iframe height='285' scrolling='no' title='image-rendering' src='//codepen.io/gregh/embed/dNPPBr/?height=285&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/dNPPBr/'>image-rendering</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-    <p>
-      <a href="http://caniuse.com/#search=image-rendering" target="_blank">http://caniuse.com/#search=image-rendering</a>
-    </p>
-
-    <h3 id="list-style-image">list-style-image</h3>
-    <p>
-      While most of the time we use <code>list-style-type: none;</code> on the &lt;ul&gt; and then apply background on the &lt;li&gt;, you can still consider applying list-style-image property to the &lt;ul&gt; element to use an image as a marker in the list.
-    </p>
-    <pre>
-ul {
-  list-style-image: url('square.gif');
-}
-    </pre>
-
-    <h3 id="list-style-position">list-style-position</h3>
-    <p>
-      This css property specifies where shall the list marker appear. It accepts two values:
-    </p>
-    <p>
-      <strong>inside:</strong> markers appear inside the list item content box<br>
-      <strong>outside:</strong> markers appear outside the list item content box
-    </p>
-
-    <h3 id="object-fit">object-fit</h3>
-    <p>
-      This is a great property. It specifies how the element is fitted into the box established by it's height and width.
-      For example if you set height and width to an image, you can now choose whether it will shrink or fitted proportionally.
-      Let's take a look at the values it accepts, then see some examples for better understanding. 
-    </p>
-    <p>
-      <strong>fill:</strong> (default) the contents of the element are size to fill the entire content box (without maintaining the aspect ration)<br>
-      <strong>contain:</strong> the contents of the element are fitted inside content box maintaining the aspect ratio<br>
-      <strong>cover:</strong> the contents of the element are fitted inside content box maintaining the aspect ratio, but fill the entire space<br>
-      <strong>none:</strong> the contents are not resized but cropped using the given height and width<br>
-      <strong>scale-down:</strong> automatically chooses between contain and none, selecting the option what would cause the smallest object size
-    </p>
-    <p>
-      Let's take a look at the examples:
-    </p>
-    <div class="embed">
-      <iframe height='400' scrolling='no' title='RKNWNp' src='//codepen.io/gregh/embed/RKNWNp/?height=400&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/RKNWNp/'>RKNWNp</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-    <p>
-      For example without object-fit we had to use this much code in order to get the result of the <code>object-fit: contain;</code>
-    </p>
-      <pre>
-.element {
-  width: 400px;
-  height: 300px;
-  position: relative;
-}
-.element img {
-  position: absolute;
-  height: auto;
-  width: auto;
-  max-height: 100%;
-  max-width: 100%;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
-}
-      </pre>
-      <p>
-        With object fit it becomes much simpler:
-      </p>
-
-      <pre>
-.element {
-  width: 400px;
-  height: 300px;
-}
-
-img {
-  width: inherit;
-  height: inherit;
-  object-fit: contain;
-}
-      </pre>
-    <p>
-      It's very helpful, but the IE and Edge spoil the party. It doesn't work on IE11 and Edge 14 and 15. Opera mini supports it with the prefix "-o-". On the rest of the browsers it works great without any prefixes.
-    </p>
-
-    <h3 id="orphans">orphans</h3>
-    <p>
-      This property helps you control how the page breaks occur. It accepts a numerical value, that indicated the minimum number of lines of the block container (eg. paragraph) that shall be left at the bottom of the page if the whole container doesn't fit on the page or in the column.
-      Unfortunately it is not currently supported in Firefox.
-    </p>
-    <p>
-      <a href="http://caniuse.com/#search=orphans" target="_blank">http://caniuse.com/#search=orphans</a>
-    </p>
-
-    <h3 id="order">order</h3>
-    <p>
-      order property specifies the items within a flex container. 
-      the value is a number, which can be negative as well, or "inherit", "initial", "unset".
-    </p>
-      <pre>
-.item:nth-child(1) { order: 3 }
-.item:nth-child(2) { order: 1 }
-.item:nth-child(3) { order: 2 }
-      </pre>
-    <p>
-      This code will display the items in the 2, 3, 1 order.
-    </p>
-
-    <h3 id="overflow-wrap">overflow-wrap</h3>
-    <p>
-      This property specifies if a line break shall occur in long words if they do not fit in the container as one word. accepts the following values:
-    </p>
-    <p>
-      <strong>normal:</strong> break words at normal break points<br>
-      <strong>break-word:</strong> break normally unbreakable words if there's no space<br>
-      and the global values: <strong>inherit, initial, unset.</strong>
-    </p>
-
-    <h3 id="page-break">page-break-*</h3>
-    <p>
-      There are three CSS properties that allow you adjust page breaks:
-    </p>
-    <p>
-      <strong>page-break-before:</strong> controls page breaks before the element<br>
-      <strong>page-break-after:</strong> controls page breaks after the element<br>
-      <strong>page-break-inside:</strong> controls page breaks inside of the element<br>
-      This is very convenient when you need to display your pages correctly when printing
-    </p>
-
-    <p>
-      They accept the following values:<br>
-      <strong>page-break-before,
-      page-break-after:</strong> auto, always, avoid, left, right, recto, verso and global variables(inherit, initial, unset)<br>
-      <strong>page-break-inside:</strong> auto, avoid and global variables(inherit, initial, unset)
-    </p>
-
-    <p>
-      <strong>auto:</strong> automatically breaks pages<br>
-      <strong>always:</strong> always insert a page break before or after the element (even if there's a lot of space)<br>
-      <strong>avoid:</strong> avoid page break before/after/inside of the element if possible<br>
-      <strong>left:</strong> insert page break so that the next page is formatted as a left page<br>
-      <strong>right:</strong> insert page break so that the next page is formatted as a right page<br>
-      <strong>recto:</strong> acts as right if page goes left-to-right, and left if ltr<br>
-      <strong>verso:</strong> acts as left if page goes ltr, and right it rtl
-    </p>
-
-    <p>
-      There are several things you should know:
-      <ol>
-        <li>"recto" and "verso" values are still experimental</li>
-        <li>The page-break-* property is going to be replaced by more generic break-* property in the near future</li>
-        <li>Most of the browsers do support avoid ONLY for page-break-inside (not support for page-break-before and page-break-after)</li>
-        <li>All browsers except Opera mini, IE and Edge treat "left" and "right" values like "always",
-        so it's a good idea to <a href="http://caniuse.com/#search=break-before" target="_blank">check if you can use it</a></li>
+        <li>Oscillator - mathematically computed sounds</li>
+        <li>Audio Samples - from audio/video files</li>
+        <li>Audio Stream - audio from webcam or microphone</li>
       </ol>
     </p>
 
-    <h3 id="percentage">percentage~</h3>
-    <p>
-      One thing I shall mention about percentage. We know that percentage is relative to the width of the container.
-      But the properties that require vertical percentage are also calculated based on width of the container.
-      So if we have a container 400px wide 300px tall, padding-top: 10% and padding-left: 10% will both be 40px (not 40px and 30px)!
-    </p>
 
-    <h3 id="perspective">perspective</h3>
+    <h3>Let's start with the oscillator</h3>
     <p>
-      The perspective CSS property gives the element a perspective. it's value is the distance from the viewport to the elements z=0 plane.
-      The value is length, that can be represented in px or em, or "none" keyword.
+      An oscillator is a repeating waveform. It has a frequency and peak amplitude. One of the most important features of the oscillator, aside from its frequency and amplitude, is the shape of its waveform. The four most commonly used oscillator waveforms are sine, triangle, square and sawtooth. 
+    </p>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/7/77/Waveforms.svg">
+    <p>
+      It is also possible to create custom shapes. Different shapes are suitable for different synthesis techniques and they produce different sounds, from smooth to harsh.
     </p>
     <p>
-      <strong>Note:</strong> the perspective property affects only 3D transformed elements. 
-      The property has to be applied to the parent element (the container) or the element that you want the perspective to be applied on.
+      Web Audio API uses OscillatorNode to represent the repeating waveform. We can use all of the above shown waveform shapes. To do so, we have to assign the value property like so:
+      <code>
+        OscillatorNode.type = 'sine'|'square'|'triangle'|'sawtooth';
+      </code> 
+    </p>
+    <p>
+      You can create a custom waveform as well. But you don't set type to 'custom'. You should use the setPeriodicWave() method to create the shape for the wave, that will automatically set the type to custom. Let's listen how different waveforms produce different sounds:
     </p>
     <div class="embed">
-      <iframe height='399' scrolling='no' title='perspective' src='//codepen.io/gregh/embed/wgBKJX/?height=399&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/wgBKJX/'>perspective</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
+      <iframe height='265' scrolling='no' title='Waveforms' src='//codepen.io/gregh/embed/preview/faf5edb298b9b1426ea4ac9c373511a5/?height=265&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/faf5edb298b9b1426ea4ac9c373511a5/'>Waveforms</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
       </iframe>
     </div>
-
-    <h3 id="pointer-events">pointer-events</h3>
     <p>
-      This property specifies how elements react to mouse events
-      It accepts the following values:
-    </p>
-    <p>
-      <strong>auto:</strong> the element behaves as if the pointer-events are not specified<br>
-      <strong>none:</strong> ignores all click, select, drag etc. mouse events
-    </p>
-    <p>
-      values specific to SVG elements:
-    </p>
-    <p>
-      <strong>visiblePainted:</strong> the filled and stroked part of the element are a target. visibility has to be set to visible and stroke value to other than none<br>
-      <strong>visibleFill:</strong> only the filled part of the element is a target. visibility has to be set to visible<br>
-      <strong>visibleStroke:</strong> only the stroked part of the element is a target. stroke value has to be other than none<br>
-      <strong>visible:</strong> the filled and stroked part of the element are a target when the visibility of the element is set to visible<br>
-      <strong>painted:</strong> the filled and stroked part of the element are a target. visibility of the element does not affect event processing<br>
-      <strong>fill:</strong> only the filled part of the element are a target. visibility of the element does not affect event processing<br>
-      <strong>stroke:</strong> only the stroked part of the element are a target. visibility of the element does not affect event processing<br>
-      <strong>all:</strong> the whole element is a target. fill, stroke and visibility properties of the element do not affect event processing
-    </p>
-    <p>
-      global values:
-      inherit, initial, unset
+      Custom waveforms are created using Fourier Transforms. If you want to learn more about custom waveform shapes, how to make a police siren, for example, you can learn it from <a href="https://www.sitepoint.com/using-fourier-transforms-web-audio-api/" target="_blank">this</a> good resource
     </p>
 
-    <h3 id="position">position</h3>
+    <h3>Running the oscillator</h3>
     <p>
-      There's one interesting value, that is unfortunately works only in Firefox, Safari, iOS Safari and Opera. It works on Chrome Canary, so we expect it to work on Chrome soon.
+      Let's try to make some noise. Here's what we need for that: 
+      <ol>
+        <li>We have to create a Web Audio API context</li>
+        <li>Create the oscillator node inside that context</li>
+        <li>Choose waveform type</li>
+        <li>Set frequency</li>
+        <li>Connect oscillator to the destination</li>
+        <li>Start the oscillator</li>
+      </ol>
     </p>
     <p>
-      The elements that have <code>position: sticky</code> are treated as "relative", until they get to the certain point, then they become fixed. Think iPhone contacts list letter bookmarks or scroll-then-fix navigation. At the moment we have to use Javascript for that, which is pretty easy, but it will be great to do it in pure CSS.
+      How just "convert" it from words to code:
+    </p>
+<pre>
+  var context = new (window.AudioContext || window.webkitAudioContext)();
+
+  var oscillator = context.createOscillator();
+
+  oscillator.type = 'sine';
+  oscillator.frequency.value = 440;
+  oscillator.connect(context.destination);
+  oscillator.start();
+</pre>
+    <p>
+      Note how we define the audio context. Safari requires the webkit prefix, so we make it cross-browser compatible.
+      Then we create the oscillator and set the type of the waveform. The default value for type is 'sine', so you can skip this line, I just like to add it to make it more clear and easy to update. We set the frequency value to 440, which is the A4 note (which is also the default value). The frequencies of musical notes C0 to B8 are in the range of 16.35 to 7902.13Hz. We will check out an example where we play a lot of notes later in this article.
     </p>
     <p>
-      Here's a pen by demonstrating that:
+      Run the pen to hear the oscillator produce the A4 note, but don't forget to lower the sound in your headphones :)
     </p>
     <div class="embed">
-      <iframe height='400' scrolling='no' title='position: sticky' src='//codepen.io/gregh/embed/BpydOB/?height=400&theme-id=0&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/BpydOB/'>position: sticky</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
+      <iframe height='265' scrolling='no' title='Oscillator 1' src='//codepen.io/gregh/embed/preview/1426308b95d8f89244e092c6db947184/?height=265&theme-id=0&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/1426308b95d8f89244e092c6db947184/'>Oscillator 1</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
       </iframe>
     </div>
-    <p class="rerun">
-      Currently works on Firefox, Safari and Chrome Canary 56.
+    <p>
+      Now when we know all of that, let's make the volume adjustable as well. For that we need to create the gain node inside of the context, connect it to the chain, and connect gain to the destination.
+    </p>
+<pre>
+  var gain = context.createGain();
+  oscillator.connect(gain);
+  gain.connect(context.destination);
+
+  var now = context.currentTime;
+  gain.gain.setValueAtTime(1, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+  oscillator.start(now);
+  oscillator.stop(now + 0.5);
+</pre>
+    <p>
+      So now you have some knowledge of working with the oscillator, here's a good exercise. <a href="http://codepen.io/gregh/pen/7e39f90b03543a99d863ab7a7bcfc15d" target="_blank">This CodePen</a> has some oscillator code setup, try to make a simple app, that changes the volume when you move the cursor up and down your screen, and changes the frequency when you move the cursor left and right.
+    </p>
+  
+    <h3>Timing of Web Audio API</h3>
+    <p>
+      One of the most important things in building audio software is managing time. And for the precision needed here using the JavaScript clock is not the best practice, because it's simply not precise enough. However the Web Audio API comes with the <code>currentTime</code> property, which is an increasing double hardware timestamp, which can be used for scheduling audio playback. It starts at 0 when the audio context is declared. Try running <code>console.log(context.currentTime)</code> to see the timestamp.
+      For example, if you want the Oscillator to play immediately you should run <code>oscillator.start(0)</code>, but you can omit the 0, because it's the default value. However you may want it to start in one second from now, play for two seconds and then stop. Here's how to do it:
+    </p>
+<pre>
+  var now = context.currentTime;
+  oscillator.play(now + 1);
+  oscillator.stop(now + 3); 
+</pre> 
+    <p>
+      There are two methods, I would like to tell you about, while we touch this topic.
+    <p>
+    <p>
+      <code>AudioParam.setValueAtTime(value, startTime)</code> method schedules change of the value at the precise time. For example you want to change frequency value of the oscillator in one second:
+    </p>
+<pre>
+  oscillator.frequency.setValueAtTime(261.6, context.currentTime + 1);
+</pre>
+    <p>
+      However, you shall also use it when you want to instantly update the value, like <code>.setValueAtTime(value, context.currentTime)</code> You can simply set the value by modifying the value property of the AudioParam, but any updates happening to the value are ignored without throwing an exception, if they happen at the same moment as the automation events (events scheduled using AudioParam methods).
+    </p>
+    <p>
+      <code>AudioParam.exponentialRampToValueAtTime(value, endTime)</code> method schedules gradual change of the value. This code will exponentially decrease the volume of the oscillator in one second, which is a good way to stop sound smoothly:
+    </p>
+<pre>
+  gain.gain.exponentialRampToValueAtTime(0.001, context.currentTime + 1);
+</pre>    
+    <p>
+      We can't use 0 as the value here, because the value needs to be positive, so we use a very small value instead.
     </p>
 
-    <h3 id="resize">resize</h3>
+    <h3>Creating the Sound class</h3>
     <p>
-      Resize property defines whether the element can be resized by user. You can make an element resizeable vertically, horizontally or both. resize accepts the following values:
+      So far you've probably noticed, that once you stop an oscillator, you cannot start it again. You don't do anything wrong, it's the feature of the Web Audio API that optimizes the performance. What we can do is to create a sound class, that will be responsible from creating oscillator node, play and stoping sounds. That way we'll be able to call the sound multiple times. I'm going to use ES6 syntax for this one:
     </p>
-    <p>
-      <strong>none:</strong> element is not resizable. This is the default value for most of the element, but textarea has value "both" by default<br>
-      <strong>both:</strong> the element is resized both vertically and horizontally<br>
-      <strong>horizontal:</strong> user can resize element horizontally<br>
-      <strong>vertical:</strong> use can resize element vertical
-    </p>
-    <p>
-      <strong>Note:</strong> in order to make an element resizeable, it's visibility has to be set to something other than visible.
-    </p>
-
-    <h3 id="shape-outside">shape-outside</h3>
-    <p>
-      This CSS property let's us make the content wrap around an element. Maybe it's a round image and you want text to wrap around that circle. The property shall be applied to the element which you want to wrap the content around. It accepts the following values:
-    </p>
-    <p>
-      <strong>Keyword values:</strong>
-        none, margin-box, padding-box, border-box, padding-box
-    </p>
-    <p>
-      <strong>Function values:</strong>
-        circle(), ellipse(), inset(), polygon()<br>
-      You can also pass an url to an image around which the content will wrap, and it accepts the global initial, inherit and unset values.
-    </p>
-    <p>
-      If you choose to use an image, the "shape-image-threshold" property will define the alpha channel threshold to separate the shape from the image.
-    </p>
-    <p>
-      Firefox and IE still don't have support for this property, and Safari supports it with the "-webkit" prefix.
-
-      More about this and all of the other properties: <a href="https://css-tricks.com/almanac/properties/s/shape-outside/">https://css-tricks.com/almanac/properties/s/shape-outside/</a>
-    </p>
-    <div class="embed">
-      <iframe height='400' scrolling='no' title='QdwqKp' src='//codepen.io/gregh/embed/QdwqKp/?height=400&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/QdwqKp/'>QdwqKp</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-
-    <h3 id="supports">@supports</h3>
-    <p>
-      This CSS at-rule gives the ability to check if the browser supports the following properties.
-      You can check if it supports a specific value or the property itself:
-    </p>
-    <pre>
-@supports (display:grid)
-{
-  .container {
-    display: grid;
+<pre>
+class Sound {
+  
+  constructor(context) {
+    this.context = context;
   }
-}            
-    </pre>
+  
+  init() {
+    this.oscillator = this.context.createOscillator();
+    this.gainNode = this.context.createGain();
 
-    <pre>
-@supports (image-rendering) {
-  img {
-    image-rendering: pixelated;
+    this.oscillator.connect(this.gainNode);
+    this.gainNode.connect(this.context.destination);
+    this.oscillator.type = 'sine';
   }
+
+  play(value, time) {
+    this.init();
+
+    this.oscillator.frequency.value = value;
+    this.gainNode.gain.setValueAtTime(1, this.context.currentTime);
+            
+    this.oscillator.start(time);
+    this.stop(time);
+  }
+  
+  stop(time) {
+    this.gainNode.gain.exponentialRampToValueAtTime(0.001, time + 1);
+    this.oscillator.stop(time + 1);
+  }
+ 
+}  
+</pre>
+  <p>
+    We pass the context to the constructor, so we can create all of the instances of the Sound class within same context. Then we have the init method, that creates the oscillator and all of the necessary filter nodes, connects them etc. Play method accepts the value (the frequency in hertz of the note it's going to play) and the time when it shall be played. But first it creates the oscillator, and that happens every time we call the play method. The stop method exponentially decreases the volume in one second until it stops the oscillator completely. So whenever we need to play the sound again, we create a new instance of the sound class and call the play method. Now we can do play some notes:
+  </p>
+<pre>
+  let context = new (window.AudioContext || window.webkitAudioContext)();
+  let note = new Sound(context);
+  let now = context.currentTime;
+  note.play(261.63, now);
+  note.play(293.66, now + 0.5);
+  note.play(329.63, now + 1);
+  note.play(349.23, now + 1.5);
+  note.play(392.00, now + 2);
+  note.play(440.00, now + 2.5);
+  note.play(493.88, now + 3);
+  note.play(523.25, now + 3.5);
+</pre>
+  <p>
+    That will play C D E F G A B C. And it plays all of these notes within the same context. If you want to know the frequencies of notes in hertz, you can find them <a href="http://www.phy.mtu.edu/~suits/notefreqs.html" target="_blank">here</a>.
+  </p>
+  <p>
+    Knowing all of this makes us able to build something like this Xylophone. It creates a new instance of Sound and plays it on mouseenter. You can check the example and try make one by yourself as an exercise. 
+  </p>
+  <div class="embed">
+    <iframe height='544' scrolling='no' title='Play the Xylophone (Web Audio API)' src='//codepen.io/gregh/embed/preview/RKVNgB/?height=544&theme-id=0&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/RKVNgB/'>Play the Xylophone (Web Audio API)</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.</iframe>
+  </div>
+  <p>
+    I've created a playground, containing all the required HTML and CSS, and the Sound class we've created. Use the data-frequency attribute to obtain the note values. <a href="http://codepen.io/gregh/pen/104a1de2b8650609ea8f49418d2f6021/?editors=0010" target="_blank">Try here</a>.
+  </p>
+
+  <h3>Working with a recorded sound</h3>
+  <p>
+    How that you've built something with an oscillator, let's now see how to work with a recorded sound. Some sounds are very hard to reproduce using the oscillator and in order to use realistic sounds in many cases you'll have to use recorded sounds. This can be .mp3, .ogg, .wav etc. See the <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Supported_media_formats" target="_blank">full list</a> for more info. I like to use .mp3, it's lightweight, widely supported and has pretty good sound quality.
+  </p>
+  <p>
+    You can't simply get sound by a URL like you do with images. We have to run an XMLHttpRequest to get the files, decode the data and put into the buffer.
+  </p>
+<pre>
+class Buffer {
+  
+  constructor(context, urls) {  
+    this.context = context;
+    this.urls = urls;
+    this.buffer = [];
+  }
+  
+  loadSound(url, index) {
+    let request = new XMLHttpRequest();
+    request.open('get', url, true);
+    request.responseType = 'arraybuffer';
+    let thisBuffer = this;
+    request.onload = function() {
+      thisBuffer.context.decodeAudioData(request.response, function(buffer) {
+                          thisBuffer.buffer[index] = buffer;
+                          updateProgress(thisBuffer.urls.length);
+                          if(index == thisBuffer.urls.length-1) {
+                            thisBuffer.loaded();
+                          }       
+                        });
+    };
+    request.send();
+  };
+  
+  loadAll() {
+    this.urls.forEach((url, index) => {
+      this.loadSound(url, index);
+    })
+  }
+  
+  loaded() {
+    // what happens when all the files are loaded
+  }
+  
+  getSoundByIndex(index) {
+    return this.buffer[index];
+  }
+
 }
-    </pre>
+</pre>
+  <p>
+    Let's take a look at the constructor. We receive our context there as we did in the Sound class, receive the list of url that shall be loaded and an empty array for the buffer.
+    The we have two methods: loadSound and loadAll. loadAll loops through the list of urls and calls the loadSound method. It's important to pass the index, so that we put the buffered sound into the correct element of the array, no matter which request loads first. This also let's us see which request is the last, which means that on it's completion all the buffer is loaded.
+  </p>
+  <p>
+    Then you can call the loaded() method, which can do something like hiding the loading indicator. And finally the getSoundByIndex(index) method gets the sound from the buffer by index for playback.
+    The decodeAudioData method has a newer promise based syntax, but it doesn't work in Safari yet:
+  </p>
+<pre>
+context.decodeAudioData(audioData).then(function(decodedData) {
+  // use the decoded data here
+});
+</pre>
+  <p>
+    Then we have to create the class for the sound. Now we have our complete class to work with the recorded sound:
+  </p>
+<pre>
+class Sound() {
+  constructor(context, buffer) {
+    this.context = context;
+    this.buffer = buffer;
+  }
 
-    <p>
-      You can also check several properties, like this:
-    </p>
-    <pre>
-@supports (display:grid) and ((image-rendering:crisp-edges) or (image-rendering:pixelated)) {}
-    </pre>
+  init() {
+    this.gainNode = this.context.createGain();
+    this.source = this.context.createBufferSource();
+    this.source.buffer = this.buffer;
+    this.source.connect(this.gainNode);
+    this.gainNode.connect(this.context.destination);
+  }
 
-    <h3 id="var">var()</h3>
-    <p>
-      var() function brings the variables functionality from Sass/Less to native CSS.
-    </p>
-    <p>
-      CSS variables are defined by authors and represent specific values the can be used multiple times in the document.
-      var() function can be used as value of any property, but cannot be used as a property or selector. The first value of the function is the name of the custom property; the second is an optional fallback value, which is used if the first argument is invalid.
-    </p>
-    <p>
-      Let's take a look at the syntax:
-    </p>
-    <pre>
-:root {
-  --primary-color: #cccccc;
+  play() {
+    this.setup();
+    this.source.start(this.context.currentTime);
+  }  
+
+  stop() {
+    this.gainNode.gain.exponentialRampToValueAtTime(0.001, this.context.currentTime + 0.5);
+    this.source.stop(this.context.currentTime + 0.5);
+  }
+
 }
+</pre>
+  <p>
+    The constructor accepts the context and the buffer. We create by calling createBufferSource() method, instead of createOscillator as we did before. The buffer is the note (element from the buffer array) that we get using the getSoundByIndex() method. Now instead of the oscillator we create a buffer source, set the buffer and then connect it to the destination (or gain and other filters).
+  </p>
+<pre>
+  let buffer = new Buffer(context, sounds);
+  buffer.loadAll();
 
-body {
-  color: var(--primary-color);
-}
-    </pre>
-    <p>
-      or me may use the fallback value as well like this:
-    </p>
-    <pre>
-body {
-  color: var(--primary-color, #cccccc);
-}
-    </pre>
-    <p>
-      the same thing looks like this in SASS:
-    </p>
-    <pre>
-$primary-color: #ccc;
+  sound = new Sound(context, buffer.getSoundByIndex(id));
+  sound.play();
+</pre>
+  <p>
+    So now we have to create an instance of buffer and call the loadAll methods, to load all of the sounds into the buffer. We also have the getSoundById method to grab the exact sound we need, so we pass the sound to the Sound and call play(). The id can be stored as a data attribute on the button that you click to play the sound.
+  </p>
+  <p>
+    Here's a project that uses all of that: the buffer, the recorded notes etc:
+  </p>
+  <div class="embed">
+    <iframe height='485' scrolling='no' title='The Bluesman - You Can Play The Blues (Web Audio API)' src='//codepen.io/gregh/embed/preview/zNzvOm/?height=485&theme-id=0&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/zNzvOm/'>The Bluesman - You Can Play The Blues (Web Audio API)</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.</iframe>
+  </div>
+  <p>
+    I want you to use it as a reference, but work on a playground I've created <a href="http://codepen.io/gregh/pen/ef483b902dd8ce0ef5f6cc378014963d/" target="_blank">here</a>. It has all the necessary HTML and CSS and the URLs to the notes that I have recorded on a real electric guitar. But try writing your own code.
+  </p>
 
-body {
-  color: $primary-color;
-}
-    </pre>
+  <h3>Intro to Filters</h3>
 
-    <p>
-      Unfortunately it's not supported in IE11, Edge 14 and Opera mini. Edge 15 will have partial support. 
-    </p>
-    <p>
-      <a href="http://caniuse.com/#search=var" target="_blank">http://caniuse.com/#search=var</a>
-    </p>
+  <p>
+    The Web Audio API lets you you add different filter nodes between your sound source and destination. BiquadFilterNode is a simple low-order filter, which gives you control over what parts of the frequency parts shall be emphasized and which parts shall be attenuated. This lets you build equalizer apps and other effects. There are 8 types of biquad filters: highpass, lowpass, bandpass, lowshelf, highshelf, peaking, notch and allpass.
+  </p>
+  <p>
+    <strong>Highpass</strong> is a filter that passes higher frequencies well, but attenuates lower frequency components of signals. <strong>Lowpass</strong> passes lower frequencies, but attenuates higher frequencies. They are also called "low cut" and "high cut" filters, because that explains what what happens to the signal.
+  </p>
+  <p>
+    <strong>Highshelf</strong> and <strong>Lowshelf</strong> filters are used to control the bass and treble of the sound. They are used to emphasize or reduce signals above or below the given frequency.
+  </p>
+  <p>
+    You will find a Q property BiquadFilterNode interface, which is a double representing the <strong>Q Factor</strong>. Quality Factor or <a href="https://en.wikipedia.org/wiki/Q_factor" targer="_blank">Q Factor</a> control the bandwidth, the number of frequencies that are affected. The lower the Q factor, the wider the bandwidth, meaning the more frequencies will be affected. The higher the Q factor, that narrower the bandwidth.
+  </p>
+  <p>
+    You can find more info about filters <a href="https://www.w3.org/TR/webaudio/#the-biquadfilternode-interface" target="_blank">here</a>, but we can already build a parametric equalizer. It's an equalizer that gives full control for adjusting the frequency, bandwidth and gain.
+  </p>
+  <p>
+    Let's build a parametric equalizer 
+  </p>
+  <div class="embed">
+    <iframe height='265' scrolling='no' title='jyXMYY' src='//codepen.io/gregh/embed/preview/jyXMYY/?height=265&theme-id=0&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/jyXMYY/'>jyXMYY</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
+    </iframe>
+  </div>
 
-    <h3 id="table-layout">table-layout</h3>
-    <p>
-      Ever needed making table cells have same width? 
-      Here's the solution:
-    </p>
-    <pre>
-    table {
-      table-layout: fixed;
-    }
-    </pre>
-    <div class="embed">
-      <iframe height='377' scrolling='no' title='table-layout: fixed' src='//codepen.io/gregh/embed/qREPYz/?height=377&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/qREPYz/'>table-layout: fixed</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
+  <p>
+    Let's take a look on how we can apply distortion to the sound. If you wonder, what makes the electic guitar sound like one, it is the distortion effect. We use the <strong>WaveShaperNode</strong> interface to represent a non-linear distorter. What we need to do is to create a curve that will shape the signal, distorting and producing the characteristic sound. We don't have to spend a lot of time to create the curve, as it's already <a href="http://stackoverflow.com/a/22313408/1090298" target="_blank">done for us</a>. We can adjust the amount of distortion as well:
+  </p>
+  <div class="embed">
+    <iframe height='265' scrolling='no' title='OWrjOb' src='//codepen.io/gregh/embed/preview/OWrjOb/?height=265&theme-id=0&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/OWrjOb/'>OWrjOb</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
+    </iframe>
+  </div>
 
-    <h3 id="text-transform">text-transform</h3>
-    <p>
-      While this is a commonly used CSS property, there's one thing I wanted to tell about the "uppercase" transform.
-      The question is which is more correct to use, text typed in CAPS LOCK or to type text in lowercase then transform it to uppercase?
-      The thing is that css transform make it more readable for search engines or screen reader pronunciation. Consider the following
-      <strong>Contact us</strong> and <strong>CONTACT US</strong>. A screen would read contact U.S., not us. It's a small nuance, but it's good to know.
-    </p>
-
-    <h3 id="transition-timing-function">transition-timing-function</h3>
-    <p>
-      You know what this property does if you use CSS transitions or animations. It specifies the speed curve of the transition effect.
-      But here's two little known values:
-    </p>
-    <p>
-      <strong>steps(n, start|end):</strong> instead of specifying smooth transiting with such timing functions as ease, this completed the animation in number of steps you define. second parameter is optional and specifies at which point within the interval shall the change occur. The default values for the second parameter is end. You can also use the shorthand functions <code>step-start(n)</code> and <code>step-end(n)</code><br>
-      <strong>cubic-bezier(n, n, n, n):</strong> your own cubic bezier function
-    </p>
-    <div class="embed">
-      <iframe height='265' scrolling='no' title='transition-timing-function' src='//codepen.io/gregh/embed/mRypgY/?height=265&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/mRypgY/'>transition-timing-function</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-    <p>
-      Use this <a href="http://cubic-bezier.com/#.23,.77,.78,.24" target="_blank">tool</a> to create cubic bezier timing functions.
-      You can also use Chrome dev tools to modify the bezier curve.
-    </p>
-    <div class="embed text-center">
-      <video width="420" height="480" autoplay loop>
-        <source src="assets/bezier.mp4" type="video/mp4">
-      </video>
-    </div>
-
-    <h3 id="vh">vh, vw, vmin, vmax</h3>
-    <p>
-      These values are used for sizing things relative to the viewport size. While width is relative to parent container, the vh or vw are always use viewport size as a basis.
-    </p>
-    <p>
-      <strong>vh:</strong> 1 vh is equal to 1/100 of viewport height<br>
-      <strong>vw:</strong> 1 vw is equal to 1/100 of viewport width<br>
-      <strong>vmin:</strong> it is the least value of vh and vw<br>
-      <strong>vmax:</strong> is the largest value of those two
-    </p>
-    <p>
-      So for a screen that has a viewport 1280x655px, 1 vh is equal to 6.55 pixels, 1 vw is equal to 12.8pixels, vmin is 6.55 pixels (least value) and vmax is 12.8 pixels (largest value)
-    </p>
-
-    <h3 id="white-space">white-space</h3>
-    <p>
-      This property defines how the white space inside the element is handled. Let's take a look at the values this property accepts for better understanding.
-    </p>
-    <p>
-      <strong>normal:</strong> collapse new lines, collapse spaces and tabs, text wrap<br>
-      <strong>nowrap:</strong> collapse new lines, collapse spaces and tabs, text nowrap<br>
-      <strong>pre:</strong> preserve new lines, preserve spaces and tabs, text nowrap<br>
-      <strong>pre-wrap:</strong> preserve new lines, preserve spaces and tabs, text wrap<br>
-      <strong>pre-line:</strong> preserve new lines, collapse spaces and tabs, text wrap
-    </p>
-    <div class="embed">
-      <iframe height='305' scrolling='no' title='dNPZpX' src='//codepen.io/gregh/embed/dNPZpX/?height=305&theme-id=0&default-tab=html,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/dNPZpX/'>dNPZpX</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-
-    <h3 id="word-break">word-break</h3>
-    <p>
-      This property specifies the line breaking rules.
-    </p>
-    <p>
-      <strong>normal:</strong> uses standard rules to break words<br>
-      <strong>break-all:</strong> lines can be broken between any two letters<br>
-      <strong>keep-all:</strong> break are prohibited between letters
-    </p>
-    <div class="embed">
-      <iframe height='296' scrolling='no' title='RKNxPJ' src='//codepen.io/gregh/embed/RKNxPJ/?height=296&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/RKNxPJ/'>RKNxPJ</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-
-    <h3 id="word-spacing">word-spacing</h3>
-    <p>
-      This is the equivalent of letter-spacing for words. You can increase or decrease the whitespace between words.
-      the standard value for this property "normal" uses the default size of whitespace (0.25em)
-      any length value, positive or negative, can be used expressed in px, pt, em etc.
-    </p>
-
-    <h3 id="will-change">will-change</h3>
-    <p>
-      "will-change" property lets authors hind the browsers what changes to expect on an element.
-    </p>
-    <p>
-      <strong>Note:</strong> the important thing to remember is that the browser is already trying to optimize the performance of animations and transitions,
-      so you should not use it on many elements, try to use it only when you see that it's necessary. Do not use it for premature optimization.
-    </p>
-    <p>
-      Let's take a look at the values it accept:
-    </p>
-    <p>
-      <strong>normal:</strong> perform standard optimizations<br>
-      <strong>scroll-position:</strong> prepare the browser for scroll position changes<br>
-      <strong>content:</strong> the contents of the element will change
-    </p>
-    <p>
-      you can also specify custom properties that will change like this:
-    </p>
-    <pre>
-will-change: top, left;
-    </pre>
-    <p>
-      before introduction of this property the following hack to hardware accelerate the animations of an element
-    </p>
-    <pre>
-transform: translate3d(0, 0, 0);
-    </pre>
-    <p>
-      If you want to dig in very deep into this matter you can <a href="https://dev.opera.com/articles/css-will-change-property/" target="_blank">read this</a>.
-    </p>
-
-    <h3 id="writing-mode">writing-mode</h3>
-    <p>
-      This property defines whether the text is laid out horizontally or vertically also the direction.
-    </p>
-    <p>
-      <strong>horizontal-tb:</strong> content flows from left to right, from top to bottom<br>
-      <strong>vertical-rl:</strong> content flows from top to bottom, from right to left<br>
-      <strong>vertical-lr:</strong> content flows from top to bottom, from left to right
-    </p>
-    <div class="embed">
-      <iframe height='296' scrolling='no' title='writing-mode' src='//codepen.io/gregh/embed/qREpMY/?height=296&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/qREpMY/'>writing-mode</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-
-    <h2>Webkit specific properties</h2>
-    The following properties will be applied only on webkit browsers.
-
-    <h3 id="webkit-autofill">:-webkit-autofill</h3>
-    <p>
-      This CSS pseudo-class matches input element the is autofilled by the browser.
-      This way you can change the style of an autofilled input in Chrome, because they have yellow background by default.
-    </p>
-
-    <h3 id="webkit-overflow-scrolling">-webkit-overflow-scrolling</h3>
-    <p>
-      This property lets us the the iOS momentum scrolling on elements on touch devices. There are two values:
-    </p>
-    <p>
-      <strong>auto:</strong> use normal scrolling, where the scrolling stops at the moment when you remove your finger from screen<br>
-      <strong>touch:</strong> use momentum scrolling
-    </p>
-
-    <h3 id="webkit-touch-callout">-webkit-touch-callout</h3>
-    <p>
-      This property lets us hide the default callout on iOS devices. When you touch and hold the target a menu appears with information and some controls.
-    </p>
-    <p>
-      <strong>none:</strong> disables the callout<br>
-      <strong>default:</strong> callout is displayed
-    </p>
-
-    <h3 id="webkit-scrollbar">-webkit-scrollbar</h3>
-    <p>
-      There's a way to hide scrollbar on an element
-    </p>
-    <pre>
-#container::-webkit-scrollbar {
-  display: none;
-}
-    </pre>
-    <p>
-      There's also a way to autohide scrollbars on IE10+ and Edge.
-    </p>
-    <pre>
-html {
-  -ms-overflow-style: ms-autohiding-scrollbar;
-}
-    </pre>
-
-    <h2 id="animatable">Animatable</h2>
-    <p>
-      To see the full list of css properties that can be animated click here: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties" target="_blank">https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties</a>
-      We most often apply transitions to opacity, background-color etc, but it's good to know that we can animate letter-spacing, for example, and get something like this:
-    </p>
-    <div class="embed">
-      <iframe height='265' scrolling='no' title='animating letter-spacing' src='//codepen.io/gregh/embed/ZLYvBO/?height=265&theme-id=0&default-tab=css,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/ZLYvBO/'>animating letter-spacing</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
+  <h3>Afterword</h3>
+  <p>
+    Now that you know how to work with the Web Audio API, and having created a couple of project already it a good idea to create one of your own.
+    Here are of the libraries for working with web audio:
+    <ul>
+      <li><a href="https://alemangui.github.io/pizzicato/" target="_blank">Pizzicato.js</a> - Pizzicato aims to simplify the way you create and manipulate sounds via the Web Audio API</li>
+      <li><a href="https://github.com/jeromeetienne/webaudiox" target="_blank">webaudiox.js</a> - webaudiox.js is a bunch of helpers that will make working with the WebAudio API easier</li>
+      <li><a href="https://github.com/goldfire/howler.js" target="_blank">howler.js</a> - Javascript audio library for the modern web</li>
+      <li><a href="https://github.com/rserota/wad" target="_blank">WAD</a> - Use the HTML5 Web Audio API for dynamic sound synthesis. It's like jQuery for your ears</li>
+      <li><a href="https://tonejs.github.io/" target="_blank">Tone.js</a> - A Web Audio framework for making interactive music in the browser</li>
+    </ul>
+     
+  </p>
 
   </article>
 

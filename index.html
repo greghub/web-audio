@@ -118,8 +118,9 @@
       Safari requires a webkit prefix to support AudioContext, so you should use that line instead of <code>new AudioContext();</code>
     </p>
     <p>
-      Normally the Web Audio API workflow looks lie this:
-      Create audio context -> create source -> connect filter nodes -> connect to destination
+      Normally the Web Audio API workflow looks like this:
+      <!-- Create audio context -> create source -> connect filter nodes -> connect to destination -->
+      <img src="assets/workflow.png" width="100%">
     </p>
     <p>
       There are three types of sources: 
@@ -135,7 +136,7 @@
     <p>
       An oscillator is a repeating waveform. It has a frequency and peak amplitude. One of the most important features of the oscillator, aside from its frequency and amplitude, is the shape of its waveform. The four most commonly used oscillator waveforms are sine, triangle, square and sawtooth. 
     </p>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/7/77/Waveforms.svg">
+    <img src="assets/waveforms.png" width="100%">
     <p>
       It is also possible to create custom shapes. Different shapes are suitable for different synthesis techniques and they produce different sounds, from smooth to harsh.
     </p>
@@ -149,7 +150,7 @@
       You can create a custom waveform as well. But you don't set type to 'custom'. You should use the setPeriodicWave() method to create the shape for the wave, that will automatically set the type to custom. Let's listen how different waveforms produce different sounds:
     </p>
     <div class="embed">
-      <iframe height='265' scrolling='no' title='Waveforms' src='//codepen.io/gregh/embed/preview/faf5edb298b9b1426ea4ac9c373511a5/?height=265&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/faf5edb298b9b1426ea4ac9c373511a5/'>Waveforms</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
+      <iframe height='300' scrolling='no' title='Waveforms' src='//codepen.io/gregh/embed/preview/faf5edb298b9b1426ea4ac9c373511a5/?height=300&theme-id=0&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/faf5edb298b9b1426ea4ac9c373511a5/'>Waveforms</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
       </iframe>
     </div>
     <p>
@@ -185,14 +186,6 @@
       Note how we define the audio context. Safari requires the webkit prefix, so we make it cross-browser compatible.
       Then we create the oscillator and set the type of the waveform. The default value for type is 'sine', so you can skip this line, I just like to add it to make it more clear and easy to update. We set the frequency value to 440, which is the A4 note (which is also the default value). The frequencies of musical notes C0 to B8 are in the range of 16.35 to 7902.13Hz. We will check out an example where we play a lot of notes later in this article.
     </p>
-    <p>
-      Run the pen to hear the oscillator produce the A4 note, but don't forget to lower the sound in your headphones :)
-    </p>
-    <div class="embed">
-      <iframe height='265' scrolling='no' title='Oscillator 1' src='//codepen.io/gregh/embed/preview/1426308b95d8f89244e092c6db947184/?height=265&theme-id=0&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/gregh/pen/1426308b95d8f89244e092c6db947184/'>Oscillator 1</a> by Greg Hovanesyan (<a href='http://codepen.io/gregh'>@gregh</a>) on <a href='http://codepen.io'>CodePen</a>.
-      </iframe>
-    </div>
-    <p>
       Now when we know all of that, let's make the volume adjustable as well. For that we need to create the gain node inside of the context, connect it to the chain, and connect gain to the destination.
     </p>
 <pre>
